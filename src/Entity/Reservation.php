@@ -28,7 +28,7 @@ class Reservation
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
-    private ?book $book = null;
+    private ?Book $book = null;
 
     public function getId(): ?int
     {
@@ -84,12 +84,12 @@ class Reservation
         return $this;
     }
 
-    public function getBook(): ?book
+    public function getBook(): ?Book
     {
         return $this->book;
     }
 
-    public function setBook(?book $book): static
+    public function setBook(?Book $book): static
     {
         $this->book = $book;
 
