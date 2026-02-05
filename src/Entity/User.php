@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -39,11 +40,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, reservation>
      */
-    #[ORM\OneToMany(targetEntity: reservation::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'user')]
     private Collection $reservation;
 
     public function __construct()
     {
+        $this->created_at = new \DateTimeImmutable();
         $this->reservation = new ArrayCollection();
     }
 
@@ -142,7 +144,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->reservation;
     }
 
-    public function addReservation(reservation $reservation): static
+    public function addReservation(Reservation $reservation): static
     {
         if (!$this->reservation->contains($reservation)) {
             $this->reservation->add($reservation);
@@ -152,7 +154,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeReservation(reservation $reservation): static
+    public function removeReservation(Reservation $reservation): static
     {
         if ($this->reservation->removeElement($reservation)) {
             // set the owning side to null (unless already changed)
