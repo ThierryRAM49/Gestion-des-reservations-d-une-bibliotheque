@@ -19,9 +19,11 @@ class ReservationType extends AbstractType
         $builder
             ->add('dateReservation', DateType::class, [
                 'widget' => 'single_text', // input type="date"
+                'disabled' => true,
             ])
             ->add('dateReturn', DateType::class, [
                 'widget' => 'single_text',
+                'data' => (new \DateTime())->modify('+14 days'), // default return date is 14 days from now
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
@@ -30,13 +32,10 @@ class ReservationType extends AbstractType
                     'Cancelled' => 'cancelled',
                 ],
             ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+
             ->add('book', EntityType::class, [
                 'class' => Book::class, // majuscule
-                'choice_label' => 'id',
+                'choice_label' => 'title',
             ]);
     }
 
@@ -44,6 +43,7 @@ class ReservationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Reservation::class,
+
         ]);
     }
 }

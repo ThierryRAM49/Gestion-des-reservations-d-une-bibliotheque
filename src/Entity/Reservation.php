@@ -14,8 +14,8 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $dateReservation = null;
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $dateReservation = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $dateReturn = null;
@@ -35,15 +35,14 @@ class Reservation
         return $this->id;
     }
 
-    public function getDateReservation(): ?\DateTime
+    public function getDateReservation(): ?\DateTimeImmutable
     {
         return $this->dateReservation;
     }
 
-    public function setDateReservation(\DateTime $dateReservation): static
+    public function setDateReservation(\DateTimeImmutable $dateReservation): self
     {
         $this->dateReservation = $dateReservation;
-
         return $this;
     }
 

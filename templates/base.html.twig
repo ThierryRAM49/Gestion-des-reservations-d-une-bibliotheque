@@ -12,6 +12,14 @@
         {% endblock %}
     </head>
     <body>
+        <header>
+            <h1>Bibliothèque</h1>
+            <nav>            
+                <a href="{{ path('app_user_index') }}">Users</a>
+                <a href="{{ path('app_book_index') }}">Books</a>
+                <a href="{{ path('app_reservation_index') }}">Reservations</a>
+            </nav> 
+        </header>
         {% block body %}{% endblock %}
     </body>
 </html>
