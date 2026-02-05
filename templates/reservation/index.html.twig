@@ -12,6 +12,7 @@
                 <th>DateReservation</th>
                 <th>DateReturn</th>
                 <th>Status</th>
+                <th>Livre emprunter</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
                 <td>{{ reservation.dateReturn ? reservation.dateReturn|date('Y-m-d') : '' }}</td>
                 <td>{{ reservation.status }}</td>
+                <td>{{ reservation.book.title }}</td>
                 <td>
                     <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
                     <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>

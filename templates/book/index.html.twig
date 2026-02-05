@@ -26,6 +26,7 @@
                 <td>{{ book.stock }}</td>
                 <td>
                     <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
+                    <a href="{{ path('app_reservation_new', {'book_id': book.id}) }}">Reserver</a>
                     {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
                     {% endif %}
