@@ -23,11 +23,12 @@ class Reservation
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $user = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $book = null;
+    #[ORM\ManyToOne(inversedBy: 'reservation')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?book $book = null;
 
     public function getId(): ?int
     {
@@ -70,24 +71,25 @@ class Reservation
         return $this;
     }
 
-    public function getUser(): ?string
+
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(string $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getBook(): ?string
+    public function getBook(): ?book
     {
         return $this->book;
     }
 
-    public function setBook(string $book): static
+    public function setBook(?book $book): static
     {
         $this->book = $book;
 
