@@ -24,31 +24,40 @@ final class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
-{
-    $user = new User();
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $user = new User();
 
-    $form = $this->createForm(UserType::class, $user);
-    $form->handleRequest($request);
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        // Hachage du mot de passe
-        $plainPassword = $form->get('password')->getData();
-        $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-        $user->setPassword($hashedPassword);
+            // Hachage du mot de passe
+            $plainPassword = $form->get('password')->getData();
+            if ($plainPassword) {
+                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+                $user->setPassword($hashedPassword);
+            }
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+            // Si aucun rôle sélectionné, ajouter ROLE_USER par défaut
+            if (empty($user->getRoles())) {
+                $user->setRoles(['ROLE_USER']);
+            }
+            $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+            $user->setPassword($hashedPassword);
 
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/new.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
-
-    return $this->render('user/new.html.twig', [
-        'user' => $user,
-        'form' => $form->createView(),
-    ]);
-}
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
@@ -79,7 +88,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Use
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
