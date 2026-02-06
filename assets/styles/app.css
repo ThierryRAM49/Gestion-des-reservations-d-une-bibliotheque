@@ -151,6 +151,20 @@ button:hover, .btn:hover {
     white-space: nowrap;
 }
 
+.logout-btn {
+    background-color: #ac1d0d; /* rouge élégant */
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #570c05;
+    text-decoration: none;
+}
+
 /* ===================== */
 /*         FOOTER        */
 /* ===================== */
