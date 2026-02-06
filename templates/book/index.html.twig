@@ -1,45 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Book index{% endblock %}
+{% block title %}Book index
+{% endblock %}
 
 {% block body %}
-    <h1>Book index</h1>
+	<h1>Book index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Autor</th>
-                <th>Description</th>
-                <th>Stock</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for book in books %}
-            <tr>
-                <td>{{ book.id }}</td>
-                <td>{{ book.title }}</td>
-                <td>{{ book.autor }}</td>
-                <td>{{ book.description }}</td>
-                <td>{{ book.stock }}</td>
-                <td>
-                    <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_new', {'book_id': book.id}) }}">Reserver</a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_book_new') }}">Create new</a>
-           {% endif %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Autor</th>
+				<th>Description</th>
+				<th>Stock</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for book in books %}
+				<tr>
+					<td>{{ book.id }}</td>
+					<td>{{ book.title }}</td>
+					<td>{{ book.autor }}</td>
+					<td>{{ book.description }}</td>
+					<td>{{ book.stock }}</td>
+					<td class="actions-cell">
+						<a class="btn btn-show" href="{{ path('app_book_show', {'id': book.id}) }}">Voir</a>
+
+						<a class="btn btn-reserve" href="{{ path('app_reservation_new', {'book_id': book.id}) }}">
+							Réserver
+						</a>
+
+						{% if is_granted('ROLE_ADMIN') %}
+							<a class="btn btn-edit" href="{{ path('app_book_edit', {'id': book.id}) }}">Modifier</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a class="btn btn-create" href="{{ path('app_book_new') }}">Créer un livre</a>
+	{% endif %}
 {% endblock %}

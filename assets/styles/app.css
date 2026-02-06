@@ -310,3 +310,121 @@ button:hover, .btn:hover {
     font-style: italic;
     opacity: 0.9;
 }
+
+/* ===================== */
+/*      PAGE BOOK        */
+/* ===================== */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.table th {
+    background-color: var(--color-header);
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table tr:hover {
+    background-color: #f7f1de;
+}
+
+/* Actions */
+.actions-cell {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Boutons généraux */
+.btn {
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Variantes */
+.btn-show {
+    background-color: #6c8c7c;
+}
+
+.btn-reserve {
+    background-color: #b87c4c;
+}
+
+.btn-edit {
+    background-color: #a8bba3;
+    color: #333;
+}
+
+.btn-create {
+    margin-top: 20px;
+    display: inline-block;
+    background-color: var(--color-title);
+}
+
+/* Hover */
+.btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Conteneur des boutons */
+.book-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;  /* pour que ça passe sur mobile si nécessaire */
+}
+
+/* Styles généraux des boutons */
+.btn {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block;
+}
+
+/* Variantes */
+.btn-back {
+    background-color: #6c8c7c;
+}
+
+.btn-edit {
+    background-color: #a8bba3;
+    color: #333;
+}
+
+.btn-delete {
+    background-color: #ac1d0d;
+    color: white;
+}
+
+/* Hover pour tous */
+.btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Hover spécifique pour delete */
+.btn-delete:hover {
+    background-color: #ac1d0d;
+    color: white;
+}

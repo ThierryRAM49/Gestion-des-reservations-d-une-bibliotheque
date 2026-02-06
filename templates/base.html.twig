@@ -36,11 +36,12 @@
 					<li>
 						<a href="{{ path('app_reservation_index') }}">Réservations</a>
 					</li>
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}<li><a href="{{ path('app_register') }}">Register</a></li>{% endif %}
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}<li><a href="{{ path('app_logout') }}" class="logout-btn">Logout</a></li>{% endif %}
-					<li>
+                    <li>
 						<a href="{{ path('app_login') }}">Login</a>
 					</li>
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}<li><a href="{{ path('app_register') }}">Register</a></li>{% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}<li><a href="{{ path('app_logout') }}" class="logout-btn">Logout</a></li>{% endif %}
+					
 				</ul>
 				<div class="user-info">
 					{% if app.user %}
