@@ -121,4 +121,23 @@ class Book
 
         return $this;
     }
+    // Méthodes de gestion du stock
+    public function isAvailable(): bool
+    {
+        return $this->stock > 0;
+    }
+
+    public function decrementStock(): void
+    {
+        if ($this->stock <= 0) {
+            throw new \LogicException('Stock insuffisant pour ce livre.');
+        }
+
+        $this->stock--;
+    }
+
+    public function incrementStock(): void
+    {
+        $this->stock++;
+    }
 }
