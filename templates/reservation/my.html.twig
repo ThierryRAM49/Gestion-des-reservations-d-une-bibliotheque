@@ -1,0 +1,11 @@
+<h1>📖 Mes réservations</h1>
+
+{% for reservation in reservations %}
+    <div>
+        {{ reservation.book.title }}
+        | du {{ reservation.dateReservation|date('d/m/Y') }}
+        au {{ reservation.dateReturn|date('d/m/Y') }}
+    </div>
+{% else %}
+    <p>Aucune réservation.</p>
+{% endfor %}
