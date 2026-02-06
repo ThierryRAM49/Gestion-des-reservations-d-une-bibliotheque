@@ -110,11 +110,16 @@ final class ReservationController extends AbstractController
             'form' => $form,
         ]);
     }
+
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_reservation_delete', methods: ['POST'])]
     public function delete(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->getPayload()->getString('_token'))) {
+            $book = $reservation->getBook();
+            if ($book) {
+                $book->incrementStock(); // méthode que tu as ajoutée dans Book
+            }
             $entityManager->remove($reservation);
             $entityManager->flush();
         }
