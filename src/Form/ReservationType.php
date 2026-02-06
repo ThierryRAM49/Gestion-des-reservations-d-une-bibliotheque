@@ -4,13 +4,14 @@ namespace App\Form;
 
 use App\Entity\Book;
 use App\Entity\Reservation;
-use App\Entity\User;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Repository\BookRepository;
 
 class ReservationType extends AbstractType
 {
@@ -36,7 +37,16 @@ class ReservationType extends AbstractType
             ->add('book', EntityType::class, [
                 'class' => Book::class, // majuscule
                 'choice_label' => 'title',
-            ]);
+            ])
+            ->add('book', EntityType::class, [
+                'class' => Book::class,
+                'choice_label' => 'title',
+                'query_builder' => function (BookRepository $repo) {
+                    return $repo->createQueryBuilder('b')
+                        ->where('b.stock > 0');
+                },
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

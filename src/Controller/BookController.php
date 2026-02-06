@@ -43,7 +43,7 @@ final class BookController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[IsGranted('ROLE_USER')]
+
     #[Route('/{id}', name: 'app_book_show', methods: ['GET'])]
     public function show(Book $book): Response
     {
