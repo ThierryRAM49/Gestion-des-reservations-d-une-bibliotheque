@@ -464,3 +464,74 @@ button:hover, .btn:hover {
         display: block;
     }
 }
+
+
+/* PAGE BOOK EDIT MODIFIER :  */
+
+.login-form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 30px auto; /* centrer sur la page */
+    transition: transform 0.3s ease-in-out;
+}
+
+.login-form:hover {
+    transform: scale(1.02);
+}
+
+.form-label {
+    font-size: 1rem;
+    color: #c4a484;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1rem;
+    border: 2px solid #a8bba3;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f7f1de;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #b87c4c;
+    box-shadow: 0 0 5px rgba(184, 124, 76, 0.5);
+    outline: none;
+}
+
+.btn-submit {
+    background-color: #a8bba3;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #b87c4c;
+    transform: scale(1.05);
+}
+
+.book-form-actions {
+    display: flex;
+    gap: 10px;           /* espace entre les boutons */
+    justify-content: center; /* centrer horizontalement */
+    margin-top: 20px;
+}
+
+.book-form-actions .btn {
+    flex: none;          /* ne pas étirer les boutons */
+}

@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="login-form">
-    <h1 class="form-title">Edit Book</h1>
+    <h1 class="form-title">Modifier Livre</h1>
 
     {{ form_errors(bookForm) }}
 
@@ -31,11 +31,8 @@
 
     {{ form_end(bookForm) }}
 
-    <!-- Lien retour -->
-    <div style="margin-top: 15px; text-align: center;">
-        <a href="{{ path('app_book_index') }}">Back to list</a>
-    </div>
-
+    <div class="book-form-actions">
+    <a href="{{ path('app_book_index') }}" class="btn btn-show">Back to list</a>
     {{ include('book/_delete_form.html.twig') }}
 </div>
 {% endblock %}
