@@ -212,7 +212,13 @@ button:hover,
 /* ************************************************************************* */
 /* Formulaire de login et register */
 /* ************************************************************************* */
-
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
 .form-title {
     color: #b87c4c;
     font-size: 2rem;
