@@ -22,38 +22,38 @@ final class UserDashboardController extends AbstractController
     }
 
     #[Route('/books', name: 'app_book_index')]
-public function books(BookRepository $bookRepository): Response
-{
-    return $this->render('book/index.html.twig', [
-        'books' => $bookRepository->findAll(),
-    ]);
-}
+    public function books(BookRepository $bookRepository): Response
+    {
+        return $this->render('book/index.html.twig', [
+            'books' => $bookRepository->findAll(),
+        ]);
+    }
 
-#[Route('/user/reservations', name: 'app_user_reservations')]
-public function reservations(ReservationRepository $reservationRepository): Response
-{
-    $user = $this->getUser();
+    #[Route('/user/reservations', name: 'app_user_reservations')]
+    public function reservations(ReservationRepository $reservationRepository): Response
+    {
+        $user = $this->getUser();
 
-    return $this->render('reservation/my.html.twig', [
-        'reservations' => $reservationRepository->findBy([
-            'user' => $user
-        ]),
-    ]);
-}
+        return $this->render('reservation/my.html.twig', [
+            'reservations' => $reservationRepository->findBy([
+                'user' => $user
+            ]),
+        ]);
+    }
 
-#[Route('/books/{id}/reserve', name: 'app_book_reserve')]
-public function reserve(Book $book, EntityManagerInterface $em): Response
-{
-    $reservation = new Reservation();
-    $reservation->setBook($book);
-    $reservation->setUser($this->getUser());
-    $reservation->setDateReservation(new \DateTime());
-    $reservation->setDateReturn((new \DateTime())->modify('+14 days'));
-    $reservation->setStatus('en cours');
+    #[Route('/books/{id}/reserve', name: 'app_book_reserve')]
+    public function reserve(Book $book, EntityManagerInterface $em): Response
+    {
+        $reservation = new Reservation();
+        $reservation->setBook($book);
+        $reservation->setUser($this->getUser());
+        $reservation->setDateReservation(new \DateTimeImmutable());
+        $reservation->setDateReturn((new \DateTime())->modify('+14 days'));
+        $reservation->setStatus('en cours');
 
-    $em->persist($reservation);
-    $em->flush();
+        $em->persist($reservation);
+        $em->flush();
 
-    return $this->redirectToRoute('app_user_reservations');
-}
+        return $this->redirectToRoute('app_user_reservations');
+    }
 }
