@@ -5,6 +5,41 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>{{ message }}</h1>
-    <p>Ceci est la page d'accueil de votre site Symfony.</p>
+    <h1>Bienvenue sur notre Bibliothèque !</h1>
+    
+    <h2>Derniers livres</h2>
+<div class="books-grid">
+    {% for book in latestBooks %}
+        <div class="book-card">
+            <h3>{{ book.title }}</h3>
+            <p><strong>Auteur:</strong> {{ book.autor }}</p>
+            <p>{{ book.description|length > 100 ? book.description[:100] ~ '...' : book.description }}</p>
+            <p><strong>Stock:</strong> {{ book.stock }}</p>
+            {% if book.isAvailable() %}
+                <button>Réserver</button>
+            {% else %}
+                <span>Indisponible</span>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>Aucun livre disponible pour le moment.</p>
+    {% endfor %}
+</div>
+
+{% if user %}
+    <h2>Mes réservations</h2>
+
+    <ul>
+        {% for reservation in myReservations %}
+            <li>
+                {{ reservation.book.title }}
+            </li>
+        {% else %}
+            <li>Vous n’avez aucune réservation en cours.</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Connectez-vous pour voir vos réservations.</p>
+{% endif %}
 {% endblock %}
+
