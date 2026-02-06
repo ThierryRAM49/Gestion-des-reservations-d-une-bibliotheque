@@ -24,7 +24,12 @@
 				<div class="logo">
 					<a href="{{ path('app_home') }}">Notre Bibliothèque</a>
 				</div>
-				<ul class="nav-menu">
+                
+                <div class="hamburger" id="hamburger">
+            &#9776; <!-- icône burger -->
+        </div>
+
+				<ul class="nav-menu" id="nav-menu">
 					<li>
 						<a href="{{ path('app_book_index') }}">Livres</a>
 					</li>
@@ -54,6 +59,8 @@
 			</nav>
 		</header>
 
+        
+
 		<main class="main-content"> {% block body %}{% endblock %}
 			</main>
 
@@ -75,5 +82,15 @@
         </p>
     </div>
 </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+});
+</script>
 		</body>
 	</html>

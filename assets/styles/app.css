@@ -91,6 +91,7 @@ body {
 /* Titres */
 h1, h2, h3, h4, h5, h6 {
     color: var(--color-title);
+    margin : 10px 0;
 }
 
 /* Boutons */
@@ -427,4 +428,39 @@ button:hover, .btn:hover {
 .btn-delete:hover {
     background-color: #ac1d0d;
     color: white;
+}
+
+/* Hamburger masqué sur desktop */
+.hamburger {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: absolute;
+        top: 70px; /* juste sous le header */
+        right: 0;
+        background-color: var(--color-header);
+        flex-direction: column;
+        width: 200px;
+        display: none;
+        padding: 15px;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-menu li {
+        margin-bottom: 10px;
+    }
+
+    .hamburger {
+        display: block;
+    }
 }
