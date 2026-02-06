@@ -3,17 +3,31 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <form method="post" class="login-form">
+        <h1 class="form-title">Create an Account</h1>
 
-    {{ form_errors(registrationForm) }}
+        <!-- Affichage des erreurs du formulaire -->
+        {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <!-- Début du formulaire -->
+        {{ form_start(registrationForm) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        <!-- Champ Email -->
+        <label for="email" class="form-label">Email</label>
+        {{ form_widget(registrationForm.email, { 'attr': { 'class': 'form-input' } }) }}
+
+        <!-- Champ Mot de Passe -->
+        <label for="plainPassword" class="form-label">Password</label>
+        {{ form_widget(registrationForm.plainPassword, { 'attr': { 'class': 'form-input' } }) }}
+
+        <!-- Champ Accepter les conditions -->
+        <label for="agreeTerms" class="form-label">I agree to the terms and conditions</label>
+        {{ form_widget(registrationForm.agreeTerms, { 'attr': { 'class': 'form-input' } }) }}
+
+        <!-- Bouton d'enregistrement -->
+        <button type="submit" class="btn-submit">Register</button>
+
+        <!-- Fin du formulaire -->
+        {{ form_end(registrationForm) }}
+    </form>
 {% endblock %}
