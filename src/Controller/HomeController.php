@@ -8,6 +8,8 @@ use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\TwigBundle\TwigEngine;
 
 class HomeController extends AbstractController
 {
@@ -22,6 +24,7 @@ class HomeController extends AbstractController
 
         // 5 derniers livres
         $latestBooks = $bookRepository->findBy([], ['id' => 'DESC'], 5);
+
 
         // Réservations de l'utilisateur connecté uniquement
     $myReservations = [];

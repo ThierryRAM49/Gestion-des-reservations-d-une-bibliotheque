@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\BookRepository;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,11 +40,18 @@ final class ReservationController extends AbstractController
     }
     #[IsGranted('ROLE_USER')]
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, BookRepository $bookRepository): Response
     {
         $reservation = new Reservation();
         $reservation->setDateReservation(new \DateTimeImmutable());
         $reservation->setUser($this->getUser());
+
+        if ($bookId = $request->query->get('book_id')) {
+            $book = $bookRepository->find($bookId);
+            if ($book) {
+                $reservation->setBook($book);
+            }
+        }
 
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
@@ -61,6 +69,7 @@ final class ReservationController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre réservation a été créée avec succès.');
 
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -101,6 +110,8 @@ final class ReservationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $this->addFlash('success', 'La réservation a été modifiée avec succès.');
 
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }

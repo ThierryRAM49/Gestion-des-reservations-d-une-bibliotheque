@@ -20,9 +20,10 @@ final class BookController extends AbstractController
     public function index(BookRepository $bookRepository): Response
     {
         return $this->render('book/index.html.twig', [
-            'book' => $bookRepository->findAll(),
+            'books' => $bookRepository->findAll(),
         ]);
     }
+
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'app_book_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -34,6 +35,8 @@ final class BookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($book);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Le livre a été ajouté avec succès.');
 
             return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -53,21 +56,23 @@ final class BookController extends AbstractController
     }
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}/edit', name: 'app_book_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
+    public function edit(Request $request, Book $book, EntityManagerInterface $entityManager): Response
     {
-        // Créer le formulaire
-    $form = $this->createForm(BookType::class, $book);
-    $form->handleRequest($request);
+        $form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $bookRepository->save($book, true);
-        return $this->redirectToRoute('app_book_index');
-    }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
 
-    return $this->render('book/edit.html.twig', [
-        'bookForm' => $form, // <-- IMPORTANT
-        'book' => $book,
-    ]);
+            $this->addFlash('success', 'Le livre a été modifié avec succès.');
+
+            return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('book/edit.html.twig', [
+            'book' => $book,
+            'form' => $form,
+        ]);
     }
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_book_delete', methods: ['POST'])]
@@ -80,5 +85,4 @@ final class BookController extends AbstractController
 
         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
     }
-
 }

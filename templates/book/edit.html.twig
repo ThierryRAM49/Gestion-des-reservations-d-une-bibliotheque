@@ -1,38 +1,85 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Book{% endblock %}
+{% block title %}Modifier Livre{% endblock %}
 
 {% block body %}
-<div class="login-form">
-    <h1 class="form-title">Modifier Livre</h1>
+    <h1 style="text-align: center; margin-bottom: 2rem;">Modifier le livre</h1>
 
-    {{ form_errors(bookForm) }}
+    <div style="max-width: 600px; margin: 0 auto; padding: 2rem; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background-color: white;">
 
-    {{ form_start(bookForm) }}
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
 
-    <!-- Titre -->
-    <label for="book_title" class="form-label">Title</label>
-    {{ form_widget(bookForm.title, { 'attr': { 'class': 'form-input' } }) }}
+            <div class="book-form">
+                {{ form_widget(form) }}
+            </div>
 
-    <!-- Auteur -->
-    <label for="book_autor" class="form-label">Author</label>
-    {{ form_widget(bookForm.autor, { 'attr': { 'class': 'form-input' } }) }}
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+                <a href="{{ path('app_book_index') }}" class="btn-cancel">Annuler</a>
+                <button type="submit" class="btn-confirm">
+                    Enregistrer les modifications
+                </button>
+            </div>
+        {{ form_end(form) }}
 
-    <!-- Description -->
-    <label for="book_description" class="form-label">Description</label>
-    {{ form_widget(bookForm.description, { 'attr': { 'class': 'form-input', 'rows': 4 } }) }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; text-align: right;">
+                {{ include('book/_delete_form.html.twig') }}
+            </div>
+        {% endif %}
+    </div>
 
-    <!-- Stock -->
-    <label for="book_stock" class="form-label">Stock</label>
-    {{ form_widget(bookForm.stock, { 'attr': { 'class': 'form-input' } }) }}
+    <style>
+        /* Styles spécifiques au formulaire livre */
+        .book-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #B87C4C; /* Couleur titre de votre charte */
+        }
 
-    <!-- Bouton Update -->
-    <button type="submit" class="btn-submit">Update</button>
+        .book-form input[type="text"],
+        .book-form input[type="number"],
+        .book-form textarea,
+        .book-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-    {{ form_end(bookForm) }}
+        .book-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
-    <div class="book-form-actions">
-    <a href="{{ path('app_book_index') }}" class="btn btn-show">Back to list</a>
-    {{ include('book/_delete_form.html.twig') }}
-</div>
+        .book-form > div {
+            margin-bottom: 15px;
+        }
+
+        /* Styles boutons */
+        .btn-confirm {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .btn-confirm:hover {
+            background-color: #218838;
+        }
+        .btn-cancel {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .btn-cancel:hover {
+            color: #28a745;
+        }
+    </style>
 {% endblock %}

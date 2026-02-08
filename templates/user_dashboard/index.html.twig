@@ -1,21 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserDashboardController!{% endblock %}
+{% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="main-content">
+    <h1 class="form-title">Tableau de bord</h1>
 
-<div class="example-wrapper">
-    <h1>Bienvenue {{ app.user.email }}</h1>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px;">
+        
+        {# Carte Gestion des Livres #}
+        <div style="background-color: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid var(--color-header); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h2 style="margin-top: 0; color: var(--color-title); font-size: 1.5rem; margin-bottom: 10px;">📚 Catalogue</h2>
+                <p style="color: #666; line-height: 1.5;">Accédez à la liste complète des livres disponibles à la réservation.</p>
+            </div>
+            <div style="margin-top: 20px; text-align: right;">
+                <a href="{{ path('app_book_index') }}" class="btn" style="text-decoration: none;">Voir les livres</a>
+            </div>
+        </div>
 
-<ul>
-    <li><a href="{{ path('app_book_index') }}">Liste des livres</a></li>
-    <li><a href="{{ path('app_user_reservations') }}">Mes réservations</a></li>
-    {# <li><a href="{{ path('app_book_index') }}">Réserver</a></li> #}
-    <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
-</ul>
+        {# Carte Mes Réservations #}
+        <div style="background-color: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid var(--color-title); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h2 style="margin-top: 0; color: var(--color-title); font-size: 1.5rem; margin-bottom: 10px;">🔖 Mes Réservations</h2>
+                <p style="color: #666; line-height: 1.5;">Consultez vos réservations en cours et votre historique.</p>
+            </div>
+            <div style="margin-top: 20px; text-align: right;">
+                <a href="{{ path('app_user_reservations') }}" class="btn" style="text-decoration: none; background-color: var(--color-title);">Gérer mes résas</a>
+            </div>
+        </div>
+
+        {# Carte Administration (Visible seulement pour ADMIN) #}
+        {% if is_granted('ROLE_ADMIN') %}
+        <div style="background-color: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid #d9534f; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h2 style="margin-top: 0; color: #d9534f; font-size: 1.5rem; margin-bottom: 10px;">⚙️ Administration</h2>
+                <p style="color: #666; line-height: 1.5;">Gestion des utilisateurs et supervision de toutes les réservations.</p>
+            </div>
+            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap;">
+                <a href="{{ path('app_user_index') }}" class="btn" style="text-decoration: none; background-color: #d9534f; font-size: 0.9rem;">Utilisateurs</a>
+                <a href="{{ path('app_reservation_index') }}" class="btn" style="text-decoration: none; background-color: #d9534f; font-size: 0.9rem;">Réservations</a>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
 </div>
 {% endblock %}

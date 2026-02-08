@@ -44,7 +44,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'user')]
     private Collection $reservation;
-
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
@@ -89,6 +88,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
+
+    /**
+     * @see AdminUserInterface
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('ROLE_ADMIN');
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function hasRole(string $role): bool
+    {
+        return array_key_exists($role, $this->roles);
+    }
+
 
     /**
      * @param list<string> $roles

@@ -1,13 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Modifier Utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    <h1 style="text-align: center; margin-bottom: 2rem;">Modifier l'utilisateur</h1>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    <div style="max-width: 600px; margin: 0 auto; padding: 2rem; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background-color: white;">
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
 
-    {{ include('user/_delete_form.html.twig') }}
+            <div class="user-form">
+                {{ form_widget(form) }}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+                <a href="{{ path('app_user_index') }}" class="btn-cancel">Annuler</a>
+                <button type="submit" class="btn-confirm">
+                    Enregistrer les modifications
+                </button>
+            </div>
+        {{ form_end(form) }}
+
+        {# Le formulaire de suppression est souvent inclus dans la page d'édition #}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; text-align: right;">
+                {{ include('user/_delete_form.html.twig') }}
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        /* Styles spécifiques au formulaire user */
+        .user-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #B87C4C; /* Couleur titre de votre charte */
+        }
+
+        .user-form input[type="text"],
+        .user-form input[type="email"],
+        .user-form input[type="password"],
+        .user-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .user-form > div {
+            margin-bottom: 15px;
+        }
+
+        /* Styles boutons */
+        .btn-confirm {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .btn-confirm:hover {
+            background-color: #218838;
+        }
+        .btn-cancel {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .btn-cancel:hover {
+            color: #28a745;
+        }
+    </style>
 {% endblock %}
