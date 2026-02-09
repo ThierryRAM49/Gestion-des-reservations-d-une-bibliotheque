@@ -19,15 +19,23 @@
 		{% endblock %}
 	</head>
 	<body>
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
 		<header class="header-fixed">
 			<nav class="nav-container">
 				<div class="logo">
 					<a href="{{ path('app_home') }}">Notre Bibliothèque</a>
 				</div>
-                
-                <div class="hamburger" id="hamburger">
-            &#9776; <!-- icône burger -->
-        </div>
+
+				<div class="hamburger" id="hamburger">
+					&#9776;
+					<!-- icône burger -->
+				</div>
 
 				<ul class="nav-menu" id="nav-menu">
 					<li>
@@ -41,12 +49,20 @@
 					<li>
 						<a href="{{ path('app_reservation_index') }}">Réservations</a>
 					</li>
-                    <li>
+					<li>
 						<a href="{{ path('app_login') }}">Login</a>
 					</li>
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}<li><a href="{{ path('app_register') }}">Register</a></li>{% endif %}
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}<li><a href="{{ path('app_logout') }}" class="logout-btn">Logout</a></li>{% endif %}
-					
+					{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+						<li>
+							<a href="{{ path('app_register') }}">Register</a>
+						</li>
+					{% endif %}
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<li>
+							<a href="{{ path('app_logout') }}" class="logout-btn">Logout</a>
+						</li>
+					{% endif %}
+
 				</ul>
 				<div class="user-info">
 					{% if app.user %}
@@ -59,38 +75,41 @@
 			</nav>
 		</header>
 
-        
 
 		<main class="main-content"> {% block body %}{% endblock %}
 			</main>
 
-            <footer class="site-footer">
-    <div class="footer-content">
-        <p>
-            © {{ "now"|date("Y") }} — Tous droits réservés
-        </p>
+			<footer class="site-footer">
+				<div class="footer-content">
+					<p>
+						©
+						{{ "now"|date("Y") }}
+						— Tous droits réservés
+					</p>
 
-        <p>
-            Mentions légales
-        </p>
+					<p>
+						Mentions légales
+					</p>
 
-        <p class="footer-authors">
-            Site réalisé en groupe par
-            <strong>Yohann.R</strong>,
-            <strong>Thierry.R</strong>
-            et <strong>Julien.B</strong>
-        </p>
-    </div>
-</footer>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
+					<p class="footer-authors">
+						Site réalisé en groupe par
+						<strong>Yohann.R</strong>,
+						<strong>Thierry.R</strong>
+						et
+						<strong>Julien.B</strong>
+					</p>
+				</div>
+			</footer>
+			<script>
+				document.addEventListener('DOMContentLoaded', function () {
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
 
-    hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-    });
+hamburger.addEventListener('click', () => {
+navMenu.classList.toggle('active');
 });
-</script>
+});
+			</script>
+
 		</body>
 	</html>

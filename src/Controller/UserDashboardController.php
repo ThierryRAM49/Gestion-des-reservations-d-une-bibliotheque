@@ -47,7 +47,7 @@ public function reserve(Book $book, EntityManagerInterface $em): Response
     $reservation = new Reservation();
     $reservation->setBook($book);
     $reservation->setUser($this->getUser());
-    $reservation->setDateReservation(new \DateTime());
+    $reservation->setDateReservation(new \DateTimeImmutable());
     $reservation->setDateReturn((new \DateTime())->modify('+14 days'));
     $reservation->setStatus('en cours');
 

@@ -35,6 +35,8 @@ final class BookController extends AbstractController
             $entityManager->persist($book);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Le livre a été ajouté avec succès.');
+
             return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -52,23 +54,28 @@ final class BookController extends AbstractController
         ]);
     }
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/{id}/edit', name: 'app_book_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
-    {
-        // Créer le formulaire
+#[Route('/{id}/edit', name: 'app_book_edit', methods: ['GET', 'POST'])]
+public function edit(
+    Request $request,
+    Book $book,
+    EntityManagerInterface $entityManager
+): Response {
     $form = $this->createForm(BookType::class, $book);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        $bookRepository->save($book, true);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Le livre a été modifié avec succès.');
+
         return $this->redirectToRoute('app_book_index');
     }
 
     return $this->render('book/edit.html.twig', [
-        'bookForm' => $form, // <-- IMPORTANT
+        'bookForm' => $form,
         'book' => $book,
     ]);
-    }
+}
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_book_delete', methods: ['POST'])]
     public function delete(Request $request, Book $book, EntityManagerInterface $entityManager): Response
