@@ -98,6 +98,7 @@ h1, h2, h3, h4, h5, h6 {
 button, .btn {
     background-color: var(--color-header);
     color: white;
+    text-align: center;
     border: none;
     padding: 10px 18px;
     border-radius: 5px;

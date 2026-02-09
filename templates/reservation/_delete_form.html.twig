@@ -1,7 +1,10 @@
-<form method="post" action="{{ path('app_reservation_delete', {'id': reservation.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
-	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
+{% if is_granted('ROLE_ADMIN') %}
+	<form method="post" action="{{ path('app_reservation_delete', {'id': reservation.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
 
-	<button class="{{ button_class|default('btn btn-delete') }}">
-		Delete
-	</button>
-</form>
+		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
+
+		<button class="{{ button_class|default('btn btn-delete') }}">
+			Delete
+		</button>
+	</form>
+{% endif %}

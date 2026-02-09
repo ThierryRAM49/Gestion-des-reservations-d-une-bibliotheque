@@ -41,29 +41,33 @@
 					<li>
 						<a href="{{ path('app_book_index') }}">Livres</a>
 					</li>
+
 					{% if is_granted('ROLE_ADMIN') %}
 						<li>
 							<a href="{{ path('app_user_index') }}">Utilisateurs</a>
 						</li>
 					{% endif %}
+
 					<li>
 						<a href="{{ path('app_reservation_index') }}">Réservations</a>
 					</li>
-					<li>
-						<a href="{{ path('app_login') }}">Login</a>
-					</li>
-					{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+
+					{# Login seulement si l'utilisateur n'est pas connecté #}
+					{% if not app.user %}
+						<li>
+							<a href="{{ path('app_login') }}">Login</a>
+						</li>
 						<li>
 							<a href="{{ path('app_register') }}">Register</a>
 						</li>
-					{% endif %}
-					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					{% else %}
+						{# Logout et affichage email si connecté #}
 						<li>
 							<a href="{{ path('app_logout') }}" class="logout-btn">Logout</a>
 						</li>
 					{% endif %}
-
 				</ul>
+
 				<div class="user-info">
 					{% if app.user %}
 						{{ app.user.email }}

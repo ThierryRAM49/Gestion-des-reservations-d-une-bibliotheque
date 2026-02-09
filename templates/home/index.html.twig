@@ -16,7 +16,7 @@
             <p>{{ book.description|length > 100 ? book.description[:100] ~ '...' : book.description }}</p>
             <p><strong>Stock:</strong> {{ book.stock }}</p>
             {% if book.isAvailable() %}
-                <button>Réserver</button>
+                <a href="{{ path('app_book_index') }}" class="btn">Réserver</a>
             {% else %}
                 <span>Indisponible</span>
             {% endif %}
